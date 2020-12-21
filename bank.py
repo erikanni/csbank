@@ -29,8 +29,11 @@ def choice(options):
     return (val-1)
 
 def main_menu():
+    error = False
     while True:
-        sp.call('clear',shell=True)
+        if error == False:
+            sp.call('clear',shell=True)
+        
         print("#########################################")
         print("#                                       #")
         print("# Would you like to sign in or sign up? #")
@@ -49,12 +52,20 @@ def main_menu():
         elif user_input == "2":
             signup_menu()
         elif user_input == "X" or user_input == "x":
+            print("Thank you for using our bank. Have a good day!")
             sys.exit()
         else:
+            sp.call('clear',shell=True)
+            error = True
             print("Please enter '1', '2' or 'X'!")
 
+
+
 def signup_menu():
-    sp.call('clear',shell=True)
+    error = False
+    while True:
+        if error == False:
+            sp.call('clear',shell=True)
     global accounts
     name = input("Enter your name: ")
     new_account_number = str(int(max(accounts.keys()))+1)
@@ -69,6 +80,9 @@ def signup_menu():
         f.close()
         sys.exit()
     else:
+        sp.call('clear',shell=True)
+        error = True
+
         print("!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("Please enter 'M', or 'X'!")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -77,13 +91,19 @@ def signup_menu():
 
 
 def login_menu():
-    sp.call('clear',shell=True)
+    error = False
+    while True:
+        if error == False:
+            sp.call('clear',shell=True)
     global accounts
     account_number = input("Enter Your Account Number: ")
     if account_number in accounts.keys():
         print(f"Hello {accounts[account_number][0]}")
         return account_number
     else:
+        error = True
+        sp.call('clear',shell=True)
+
         print("----------------------")
         print("No such account exists")
         print("----------------------")
@@ -95,7 +115,10 @@ def login_menu():
 
 def operations_menu(account_number):
     while True:
-        sp.call('clear',shell=True)
+        error = False
+        while True:
+            if error == False:
+                sp.call('clear',shell=True)
         print("##########################################")
         print("#                                        #")
         print("# Would you like to Deposit or Withdraw? #")
@@ -115,13 +138,19 @@ def operations_menu(account_number):
         elif user_input == "X" or user_input == "x":
             return
         else:
+            error = True
+            sp.call('clear',shell=True)
+
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             print("Please enter '1', '2' or 'X'!")
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 
 def deposit_menu(account_number):
-    sp.call('clear',shell=True)
+    error = False
+    while True:
+        if error == False:
+            sp.call('clear',shell=True)
     print("###################################################################")
     print("#                                                                 #")
     print("#      Enter amount to Deposit, or press any letter to exit:      #")
@@ -131,11 +160,15 @@ def deposit_menu(account_number):
     try:
         deposit_amount = float(deposit_input)
     except ValueError:
+        error = True
+        sp.call('clear',shell=True)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("Invalid input. Returning...")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         return
     if deposit_amount > 1000000 or deposit_amount < 0:
+        error = True
+        sp.call('clear',shell=True)
         print("!!!!!!!!!!!!!!!!!")
         print("not a valid input")
         print("!!!!!!!!!!!!!!!!!")
@@ -158,22 +191,31 @@ def deposit_menu(account_number):
 
 
 def withdraw_menu(account_number):
-    sp.call('clear',shell=True)
+    error = False
+    while True:
+        if error == False:
+            sp.call('clear',shell=True)
     withdraw_input = input("Enter amount to Withdraw, or press any letter to exit: ")
     try:
         withdraw_amount = float(withdraw_input)
     except ValueError:
+        sp.call('clear',shell=True)
+        error = True
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("Invalid input. Returning...")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         return
     if withdraw_amount > 1000000 or withdraw_amount < 0:
+        sp.call('clear',shell=True)
+        error = True
         print("!!!!!!!!!!!!!!!!!")
         print("not a valid input")
         print("!!!!!!!!!!!!!!!!!")
         return
     amount = accounts[account_number][1]
     if withdraw_amount > amount:
+        sp.call('clear',shell=True)
+        error = True
         print("!!!!!!!!!!!!!!!!!!")
         print("Insufficient Funds")
         print("!!!!!!!!!!!!!!!!!!")

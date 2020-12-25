@@ -29,6 +29,7 @@ def choice(options):
     return (val-1)
 
 def main_menu():
+    ##displays error message with menu if error = true
     error = False
     while True:
         if error == False:
@@ -62,6 +63,7 @@ def main_menu():
 
 
 def signup_menu():
+    ##displays error message with menu if error = true
     error = False
     while True:
         if error == False:
@@ -79,7 +81,7 @@ def signup_menu():
             json.dump(accounts, f)
             f.close()
             sys.exit()
-        else:
+        else: ##displays error message with menu if error = true
             sp.call('clear',shell=True)
             error = True
 
